@@ -11,7 +11,7 @@ import {
   
   const productRouter = express.Router();
 
-  productRouter.get("/:id", getProduct);
+  productRouter.get("/:slug", getProduct);
   productRouter.get("/", getAllProducts);
   productRouter.post("/",authenticate, checkRole(["Admin"]), createProduct);
   productRouter.post("/update/:id", authenticate, checkRole(["Admin"]) , updateProduct);

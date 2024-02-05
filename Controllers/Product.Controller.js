@@ -15,10 +15,11 @@ export const getAllProducts = async (req, res) => {
 
 // Get a single Product
 export const getProduct = async (req, res) => {
-  const id = req.params.id;
+  // const id = req.params.id;
+  const slug = req.params.slug
 
   try {
-    const product = await Product.findById(id);
+    const product = await Product.findOne({slug});
 
     if (!product) {
       return res.status(404).json({ error: "Product Not Found!" });
@@ -39,6 +40,8 @@ export const createProduct = async (req, res) => {
     //add images from files
   } = req.body;
 
+  const imageArray = [];
+
   const slug = slugify(title, {
     replacement: '-',  // replace spaces with replacement character, defaults to `-`
     remove: undefined, // remove characters that match regex, defaults to `undefined`
@@ -46,10 +49,11 @@ export const createProduct = async (req, res) => {
     trim: true         // trim leading and trailing replacement chars, defaults to `true`
   })
 
-  if (!req.file) {
-    return res.status(400).json({ error: "Please upload an image" });
-  }
-  const image = req.file.filename;
+  // if (!req.file) {
+  //   return res.status(400).json({ error: "Please upload an image" });
+  // }
+  // const image = req.file.filename;
+
 
   try {
     const newProduct = Product.create({
